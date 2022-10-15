@@ -1,0 +1,13 @@
+---
+ - hosts: localhost
+   gather_facts: false
+   vars_files:
+     - /opt/auto-discovery/password.yml
+
+   tasks:
+    - name: try
+      ansible.builtin.expect:
+       command: ansible-vault encrypt --ask-vault-pass secrets.yml
+       responses:
+         New Vault password: "{{vault_pass}}"
+         Confirm New Vault password: "{{vault_pass}}"

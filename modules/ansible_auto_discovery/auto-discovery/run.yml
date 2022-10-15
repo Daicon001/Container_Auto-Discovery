@@ -1,0 +1,13 @@
+---
+ - hosts: localhost
+   vars_files:
+     - /opt/auto-discovery/password.yml
+   gather_facts: false
+
+   tasks:
+    - name: try
+      ansible.builtin.expect:
+       command: ansible-playbook -e @/opt/auto-discovery/secrets.yml /opt/auto-discovery/discovery.yml --ask-vault-pass
+       responses:
+         Vault password: "{{vault_pass}}"
+       timeout: 600
